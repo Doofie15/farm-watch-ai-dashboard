@@ -1,0 +1,6 @@
+{
+  "name": "Farm Watch AI Dashboard",
+  "description": "An admin dashboard for visualizing and managing farm watch incidents reported via WhatsApp and analyzed by AI. Displays incident details, locations on a map, and provides analytics.",
+  "requestFramePermissions": [],
+  "prompt": ""
+}

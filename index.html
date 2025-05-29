@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AWK Farm Watch - AI Dashboard</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
+  <!-- Remove Leaflet CSS -->
+  <style>
+    /* Ensure map has a defined size */
+    .map-container-google { /* Updated class for Google Maps if needed */
+      height: 100%;
+      width: 100%;
+    }
+    /* Basic scrollbar styling for a more modern look */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f1f1f1;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #c1c1c1;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #a1a1a1;
+    }
+    .gm-style .gm-style-iw-c { /* Style info window */
+      padding: 10px !important;
+      border-radius: 8px !important;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1) !important;
+    }
+    .gm-style .gm-style-iw-d { /* Style info window content */
+      overflow: auto !important;
+    }
+
+    /* Dropdown option styling for visibility */
+    select option {
+      color: #111827; /* Tailwind gray-900 - very dark text */
+      background-color: #ffffff; /* Ensure white background */
+    }
+
+    select option:hover,
+    select option:focus,
+    select option:checked { /* :checked applies to the selected option in the list for some browsers */
+      background-color: #d1fae5; /* Tailwind emerald-100 - light green background for hover/focus */
+      color: #065f46;       /* Tailwind emerald-800 - dark green text for hover/focus */
+    }
+  </style>
+<script type="importmap">
+{
+  "imports": {
+    "react/": "https://esm.sh/react@^19.1.0/",
+    "react": "https://esm.sh/react@^19.1.0",
+    "react-dom/": "https://esm.sh/react-dom@^19.1.0/",
+    "recharts": "https://esm.sh/recharts@^2.15.3",
+    "@googlemaps/markerclusterer": "https://esm.sh/@googlemaps/markerclusterer@2.0.15",
+    "@google/genai": "https://esm.sh/@google/genai@^1.2.0"
+  }
+}
+</script>
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD3wWF2a8TwWnXG7W_8ALtydF1si4JCpOY&libraries=visualization,marker&callback=initMap" id="google-maps-script"></script>
+  <script>
+    // This callback function needs to be globally accessible
+    // We'll use it to signal React that the API is loaded
+    function initMap() {
+      window.googleMapsApiLoaded = true;
+      const event = new Event('googleMapsApiLoaded');
+      window.dispatchEvent(event);
+    }
+    // Fallback if key is missing or script fails for some reason
+    const script = document.getElementById('google-maps-script');
+    if (script) {
+      script.onerror = () => {
+        console.error("Google Maps script failed to load. Please check API key and network.");
+        window.googleMapsApiLoaded = false; // explicit false
+        const event = new Event('googleMapsApiLoaded');
+        window.dispatchEvent(event); // Dispatch anyway to unblock app
+      }
+    } else {
+        console.error("Google Maps script element not found.");
+    }
+  </script>
+</head>
+<body class="bg-slate-50 font-sans">
+  <div id="root"></div>
+  <script type="module" src="/index.tsx"></script>
+</body>
+</html><link rel="stylesheet" href="index.css">
+<script src="index.tsx" type="module"></script>

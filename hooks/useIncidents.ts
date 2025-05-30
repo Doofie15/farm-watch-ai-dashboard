@@ -1,8 +1,9 @@
 
 import { useState, useEffect, useMemo, useCallback } from 'react';
-import { Incident, FilterCriteria, Status, IncidentType, Reporter, UserType, AppConfiguration, Severity } from '../types';
-import { MOCK_INCIDENTS, MOCK_REPORTERS } from '../constants';
+import { Incident, FilterCriteria, Status, IncidentType, Reporter, UserType, Severity } from '../types';
+import { mockIncidents, mockReporters } from '../data/mockData';
 import { useAppConfig } from './useAppConfig'; // Import useAppConfig
+// import { useMockData } from './useMockData'; // Import available if needed in the future
 
 type UseAppConfigReturnType = ReturnType<typeof useAppConfig>;
 
@@ -10,7 +11,7 @@ type UseAppConfigReturnType = ReturnType<typeof useAppConfig>;
 const fetchIncidentsFromApi = (): Promise<Incident[]> => {
   return new Promise(resolve => {
     setTimeout(() => {
-      resolve(JSON.parse(JSON.stringify(MOCK_INCIDENTS))); // Deep copy
+      resolve(JSON.parse(JSON.stringify(mockIncidents))); // Deep copy
     }, 500);
   });
 };
@@ -19,12 +20,14 @@ const fetchIncidentsFromApi = (): Promise<Incident[]> => {
 const fetchReportersFromApi = (): Promise<Reporter[]> => {
   return new Promise(resolve => {
     setTimeout(() => {
-      resolve(JSON.parse(JSON.stringify(MOCK_REPORTERS))); // Deep copy
+      resolve(JSON.parse(JSON.stringify(mockReporters))); // Deep copy
     }, 300);
   });
 };
 
 export const useIncidents = (appConfigHook: UseAppConfigReturnType) => {
+  // We can use our comprehensive mock data hook if needed in the future
+  // const mockDataHook = useMockData();
   const { config: appConfig, getActiveItems, getLabel } = appConfigHook;
 
   const [allIncidents, setAllIncidents] = useState<Incident[]>([]);

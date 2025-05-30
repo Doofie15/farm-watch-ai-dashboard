@@ -1,4 +1,4 @@
-# AGRI FarmWatch AI Dashboard
+# FarmWatch AI Dashboard
 
 An admin dashboard for visualizing and managing farm watch incidents reported via WhatsApp and analyzed by AI. Displays incident details, locations on a map, and provides analytics.
 
@@ -18,12 +18,16 @@ An admin dashboard for visualizing and managing farm watch incidents reported vi
     *   View a list of (mock) incoming WhatsApp messages.
     *   Link messages to existing incidents or mark as read/unread.
     *   View message details.
-*   **Analytics Hub**:
+*   **Enhanced Analytics Hub**:
     *   Geographic distribution charts (by town, municipality, district, province).
-    *   Incidents by type (pie chart) and severity (bar chart).
-    *   Severity breakdown by incident type (stacked bar chart).
-    *   Top reporters by incident count (bar chart).
-    *   Incident reports by reporter type (pie chart).
+    *   Interactive charts with multiple visualization options:
+        *   Incidents by type (pie/donut/bar chart) with time range filtering.
+        *   Incidents by severity (pie/donut/bar chart) with time range filtering.
+        *   Severity breakdown by incident type (stacked/vertical/horizontal bar chart) with time range filtering.
+        *   Incidents over time (line/area/bar chart) with time range filtering and statistical context.
+        *   Top reporters by incident count (bar chart).
+        *   Incident reports by reporter type (pie/donut chart).
+    *   All charts include enhanced tooltips and empty state handling.
 *   **Comprehensive Configuration Management**:
     *   Separate configuration pages for:
         *   **Incident Types**: Manage labels, active status, and dynamically add/delete custom types.
@@ -39,7 +43,28 @@ An admin dashboard for visualizing and managing farm watch incidents reported vi
     *   User session managed via `sessionStorage`.
     *   User credentials (simulated) stored as part of app configuration in `localStorage`.
 *   **Responsive Design**: Adapts to various screen sizes.
+*   **Enhanced User Profile Page**: Comprehensive user profile with tabs for personal information, security settings, notifications, activity logs, and farm details.
 *   **User Settings Page**: Placeholder for theme, language, and notification preferences.
+
+## Recent Updates
+
+### May 2025 Update
+
+* **Enhanced Charts and Visualizations**:
+  * Added multiple visualization options to all charts (pie/donut/bar for type and severity charts, line/area/bar for time-based charts)
+  * Implemented time range filtering (week/month/all) across all charts
+  * Added improved tooltips with percentage calculations and better formatting
+  * Implemented consistent empty state handling for all charts
+
+* **User Experience Improvements**:
+  * Added pagination to incident tables (10 rows per page)
+  * Implemented a comprehensive user profile page with multiple tabs
+  * Added quick admin login option for development purposes
+
+* **Code Quality and Performance**:
+  * Fixed React hooks issues in chart components
+  * Improved TypeScript type safety throughout the application
+  * Implemented barrel exports for profile components
 
 ## Tech Stack
 
@@ -79,6 +104,14 @@ This project is designed to run directly in the browser using ES modules and CDN
 ## Building for Production
 
 No explicit "build" step (like `npm run build`) is required due to the CDN-based setup. The existing files are static assets ready for deployment.
+
+## GitHub Repository
+
+The FarmWatch AI Dashboard is hosted on GitHub, where you can find the latest code, contribute to the project, or report issues:
+
+* **Repository**: [github.com/Doofie15/farm-watch-ai-dashboard](https://github.com/Doofie15/farm-watch-ai-dashboard)
+* **Issues**: Please report any bugs or feature requests through the GitHub issues page
+* **Contributions**: Pull requests are welcome! Please see our contributing guidelines
 
 ## Deployment to Netlify
 

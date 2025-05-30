@@ -1,6 +1,6 @@
 
 
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import Header from './components/Header';
 import Sidebar from './components/Sidebar'; 
 import DashboardView from './components/DashboardView'; 
@@ -13,7 +13,12 @@ import IncidentDetailModal from './components/IncidentDetailModal';
 import AnalyticsView from './components/AnalyticsView';
 import { useIncidents } from './hooks/useIncidents';
 import { useAppConfig } from './hooks/useAppConfig';
-import { Incident, Reporter, ConfigurableListItem, AppConfiguration } from './types'; 
+import { Incident, Reporter } from './types'; 
+
+// Auth Components
+import AuthProvider from './components/auth/AuthProvider';
+import AuthLayout from './components/auth/AuthLayout';
+import UserProfilePage from './components/auth/UserProfilePage';
 
 // Import new config pages
 import ConfigIncidentTypesPage from './components/config/ConfigIncidentTypesPage';
@@ -161,7 +166,7 @@ const ReportsViewPlaceholder: React.FC = () => (
 
 
 // --- Main App Component ---
-const App: React.FC = () => {
+const AppContent: React.FC = () => {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [currentPage, setCurrentPage] = useState('Dashboard');
   const [selectedReporterIdForDetail, setSelectedReporterIdForDetail] = useState<string | null>(null);
@@ -222,6 +227,8 @@ const App: React.FC = () => {
         return <LiveMapView incidentsHook={incidentsHook} appConfig={appConfigHook.config} />;
       case 'Settings':
         return <SettingsView />;
+      case 'User Profile':
+        return <UserProfilePage onBack={() => setCurrentPage('Dashboard')} />;
       // New Configuration Sub-Pages
       case 'Config: Incident Types':
         return <ConfigIncidentTypesPage />;
@@ -309,7 +316,7 @@ const App: React.FC = () => {
 
 
       <div className="flex-1 flex flex-col overflow-hidden">
-        <Header onToggleSidebar={handleToggleSidebar} sidebarOpen={sidebarOpen} />
+        <Header onToggleSidebar={handleToggleSidebar} sidebarOpen={sidebarOpen} onNavigateToPage={navigateToPage} />
         <main className={`flex-1 overflow-x-hidden overflow-y-auto p-4 sm:p-6 bg-slate-100 ${currentPage === 'Live Map' || currentPage === 'Analytics Hub' || currentPage.startsWith('Config:') ? 'p-0 sm:p-0' : ''}`}>
           {appConfigHook.isLoading ? 
             <div className="flex justify-center items-center h-full text-lg text-slate-600 p-6">
@@ -331,6 +338,19 @@ const App: React.FC = () => {
         appConfig={appConfigHook.config} 
       />
     </div>
+  );
+};
+
+// Wrap the app with authentication provider
+const App: React.FC = () => {
+  const appConfigHook = useAppConfig();
+  
+  return (
+    <AuthProvider>
+      <AuthLayout userTypeOptions={appConfigHook.config.userTypes.map(type => ({ value: type.id, label: type.label }))}>  
+        <AppContent />
+      </AuthLayout>
+    </AuthProvider>
   );
 };
 
